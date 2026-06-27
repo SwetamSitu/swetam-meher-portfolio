@@ -4,6 +4,7 @@ const siteHeader = document.querySelector(".site-header");
 const root = document.documentElement;
 const year = document.querySelector("#year");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const canvas = document.querySelector(".constellation-canvas");
 const pipelineCopy = {
   source: {
     title: "Source intake and profiling",
@@ -195,6 +196,110 @@ if (!prefersReducedMotion) {
       card.style.setProperty("--tilt-y", "0deg");
     });
   });
+
+  document.querySelectorAll(".button").forEach((button) => {
+    button.addEventListener("pointermove", (event) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      button.style.transform = `translate(${x * 0.08}px, ${y * 0.12}px)`;
+    });
+
+    button.addEventListener("pointerleave", () => {
+      button.style.transform = "";
+    });
+  });
+
+  if (canvas) {
+    const context = canvas.getContext("2d");
+    const particles = [];
+    const particleCount = 74;
+    let width = 0;
+    let height = 0;
+    let animationFrame = 0;
+
+    const resizeCanvas = () => {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(ratio, 0, 0, ratio, 0, 0);
+    };
+
+    const createParticles = () => {
+      particles.length = 0;
+
+      for (let index = 0; index < particleCount; index += 1) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.32,
+          vy: (Math.random() - 0.5) * 0.32,
+          r: Math.random() * 1.8 + 0.8,
+        });
+      }
+    };
+
+    const drawNetwork = () => {
+      context.clearRect(0, 0, width, height);
+
+      particles.forEach((particle) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        if (particle.x < -20) particle.x = width + 20;
+        if (particle.x > width + 20) particle.x = -20;
+        if (particle.y < -20) particle.y = height + 20;
+        if (particle.y > height + 20) particle.y = -20;
+      });
+
+      for (let i = 0; i < particles.length; i += 1) {
+        for (let j = i + 1; j < particles.length; j += 1) {
+          const a = particles[i];
+          const b = particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < 132) {
+            context.strokeStyle = `rgba(48, 242, 210, ${0.14 * (1 - distance / 132)})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.stroke();
+          }
+        }
+      }
+
+      particles.forEach((particle) => {
+        context.fillStyle = "rgba(48, 242, 210, 0.42)";
+        context.beginPath();
+        context.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
+        context.fill();
+      });
+
+      animationFrame = requestAnimationFrame(drawNetwork);
+    };
+
+    resizeCanvas();
+    createParticles();
+    drawNetwork();
+
+    window.addEventListener(
+      "resize",
+      () => {
+        window.cancelAnimationFrame(animationFrame);
+        resizeCanvas();
+        createParticles();
+        drawNetwork();
+      },
+      { passive: true }
+    );
+  }
 } else {
   document.querySelectorAll(".reveal").forEach((item) => item.classList.add("is-visible"));
 }
