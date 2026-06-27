@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Portfolio website for Swetam Meher, ETL Developer and Software Engineer specialising in SQL, GCP, Informatica, and treasury data workflows."
+    >
+    <title>Swetam Meher | ETL Developer & Software Engineer</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="cursor-glow" aria-hidden="true"></div>
+
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Swetam Meher home">
+        <span class="brand-mark">SM</span>
+        <span>Swetam Meher</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-label="Open navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="#pipeline">Pipeline</a>
+        <a href="#case-studies">Case Studies</a>
+        <a href="#work">Work</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-media" aria-hidden="true">
+          <img src="assets/data-creative-hero.png" alt="">
+        </div>
+        <div class="hero-motion" aria-hidden="true">
+          <span class="data-node node-one"></span>
+          <span class="data-node node-two"></span>
+          <span class="data-node node-three"></span>
+          <span class="data-line line-one"></span>
+          <span class="data-line line-two"></span>
+          <span class="data-line line-three"></span>
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">ETL Developer | SQL | GCP | Informatica | Quantum Treasury Suite</p>
+          <h1>I build dependable ETL systems for treasury, cloud, and enterprise data teams.</h1>
+          <p class="hero-copy">
+            I am Swetam Meher, a Software Engineer II based near Haywards Heath. I turn
+            requirements into tested, supportable data flows across SQL, Informatica,
+            GCP-oriented delivery, and treasury platforms.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#pipeline">Explore Pipeline</a>
+            <a class="button ghost" href="mailto:mehersitu2013@gmail.com">Email Me</a>
+          </div>
+          <div class="hero-tags" aria-label="Core strengths">
+            <span>Requirement analysis</span>
+            <span>ETL build</span>
+            <span>SQL validation</span>
+            <span>Production support</span>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Profile highlights">
+          <div>
+            <strong><span data-count="8">8</span>+ years</strong>
+            <span>IT delivery experience</span>
+          </div>
+          <div>
+            <strong>Cloud + ETL</strong>
+            <span>GCP, Azure, Informatica</span>
+          </div>
+          <div>
+            <strong>Creative edge</strong>
+            <span>Design and photography</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section intro reveal" aria-labelledby="intro-title">
+        <div class="section-heading">
+          <p class="eyebrow">About</p>
+          <h2 id="intro-title">Technology with structure, empathy, and visual discipline.</h2>
+        </div>
+        <div class="intro-copy">
+          <p>
+            My work sits at the point where requirements become dependable data flows:
+            requirement analysis, technical design, Informatica PowerCenter development,
+            SQL optimisation, testing, release support, and stakeholder communication.
+          </p>
+          <p>
+            Outside the core engineering lane, I bring a designer's sense of clarity and a
+            photographer's attention to framing. That mix helps me make complex technical
+            work easier to understand, operate, and improve.
+          </p>
+        </div>
+      </section>
+
+      <section class="section pipeline-section reveal" id="pipeline" aria-labelledby="pipeline-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Interactive ETL Lab</p>
+          <h2 id="pipeline-title">A portfolio should show the system, not just say the keywords.</h2>
+        </div>
+        <div class="pipeline-lab">
+          <div class="pipeline-canvas" aria-label="Animated ETL pipeline">
+            <button class="pipeline-stage is-active" type="button" data-stage="source">
+              <span class="stage-icon">01</span>
+              <strong>Source</strong>
+              <small>Applications, files, treasury events</small>
+            </button>
+            <div class="pipeline-connector" aria-hidden="true"><span></span></div>
+            <button class="pipeline-stage" type="button" data-stage="extract">
+              <span class="stage-icon">02</span>
+              <strong>Extract</strong>
+              <small>Mappings, sessions, dependencies</small>
+            </button>
+            <div class="pipeline-connector" aria-hidden="true"><span></span></div>
+            <button class="pipeline-stage" type="button" data-stage="transform">
+              <span class="stage-icon">03</span>
+              <strong>Transform</strong>
+              <small>Business rules, cleansing, joins</small>
+            </button>
+            <div class="pipeline-connector" aria-hidden="true"><span></span></div>
+            <button class="pipeline-stage" type="button" data-stage="validate">
+              <span class="stage-icon">04</span>
+              <strong>Validate</strong>
+              <small>SQL checks, reconciliation, defects</small>
+            </button>
+            <div class="pipeline-connector" aria-hidden="true"><span></span></div>
+            <button class="pipeline-stage" type="button" data-stage="publish">
+              <span class="stage-icon">05</span>
+              <strong>Publish</strong>
+              <small>Cloud, reporting, operations</small>
+            </button>
+          </div>
+          <div class="pipeline-console" aria-live="polite">
+            <p class="console-label">Current Stage</p>
+            <h3 id="pipeline-stage-title">Source intake and profiling</h3>
+            <p id="pipeline-stage-copy">
+              I start by understanding where the data originates, what business event it
+              represents, and what quality expectations must be protected downstream.
+            </p>
+            <div class="pipeline-metrics">
+              <span><strong>Traceability</strong> mapped early</span>
+              <span><strong>Controls</strong> designed before build</span>
+              <span><strong>Support</strong> considered from day one</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section case-section reveal" id="case-studies" aria-labelledby="case-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Case Studies</p>
+          <h2 id="case-title">Project stories recruiters and engineering leaders can actually evaluate.</h2>
+        </div>
+        <div class="case-grid">
+          <article class="case-card tilt-card reveal">
+            <div class="case-meta">
+              <span>Data Engineering</span>
+              <span>Informatica + SQL</span>
+            </div>
+            <h3>Enterprise ETL delivery from requirements to support</h3>
+            <p>
+              Converted stakeholder requirements into ETL mappings, test evidence,
+              support routines, and handover-ready documentation for repeatable delivery.
+            </p>
+            <dl>
+              <div><dt>Focus</dt><dd>Design, build, test, release support</dd></div>
+              <div><dt>Proof</dt><dd>Cleaner data movement and predictable operations</dd></div>
+            </dl>
+          </article>
+          <article class="case-card tilt-card reveal">
+            <div class="case-meta">
+              <span>Treasury Systems</span>
+              <span>Quantum Suite</span>
+            </div>
+            <h3>Treasury data reliability for business-critical workflows</h3>
+            <p>
+              Supported treasury application data flows where accuracy, reconciliation,
+              traceability, and calm production handling are non-negotiable.
+            </p>
+            <dl>
+              <div><dt>Focus</dt><dd>Reconciliation, incident analysis, stakeholder updates</dd></div>
+              <div><dt>Proof</dt><dd>Reliable operational support under business pressure</dd></div>
+            </dl>
+          </article>
+          <article class="case-card tilt-card reveal">
+            <div class="case-meta">
+              <span>Cloud Readiness</span>
+              <span>GCP + Azure</span>
+            </div>
+            <h3>Modernising data delivery with cloud-first thinking</h3>
+            <p>
+              Applied cloud computing fundamentals to shape data workflows that are easier
+              to monitor, explain, improve, and hand over to distributed teams.
+            </p>
+            <dl>
+              <div><dt>Focus</dt><dd>Platform awareness, SQL quality, delivery discipline</dd></div>
+              <div><dt>Proof</dt><dd>Better communication between data and business teams</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="section work-band reveal" id="work" aria-labelledby="work-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Selected Work Themes</p>
+          <h2 id="work-title">The kind of problems I like solving.</h2>
+        </div>
+        <div class="work-grid">
+          <article class="work-card tilt-card reveal">
+            <span class="card-index">01</span>
+            <h3>ETL pipeline delivery</h3>
+            <p>
+              Translating business requirements into maintainable mappings, workflows,
+              transformations, testing plans, and production support routines.
+            </p>
+          </article>
+          <article class="work-card tilt-card reveal">
+            <span class="card-index">02</span>
+            <h3>Treasury data operations</h3>
+            <p>
+              Supporting Quantum Treasury Suite workflows where accuracy, traceability,
+              reconciliation, and predictable operations matter every day.
+            </p>
+          </article>
+          <article class="work-card tilt-card reveal">
+            <span class="card-index">03</span>
+            <h3>Cloud-ready data systems</h3>
+            <p>
+              Working across SQL, cloud computing concepts, GCP-oriented delivery, and
+              Azure fundamentals to modernise data movement and platform reliability.
+            </p>
+          </article>
+          <article class="work-card tilt-card reveal">
+            <span class="card-index">04</span>
+            <h3>Creative technical communication</h3>
+            <p>
+              Using design and photography instincts to make documentation, visuals, and
+              stakeholder conversations sharper, calmer, and easier to act on.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section split reveal" id="experience" aria-labelledby="experience-title">
+        <div class="section-heading sticky-heading">
+          <p class="eyebrow">Experience</p>
+          <h2 id="experience-title">A steady progression through delivery, analysis, and engineering.</h2>
+        </div>
+        <div class="timeline" aria-label="Professional timeline">
+          <article class="timeline-item reveal">
+            <span class="timeline-date">May 2026 - Present</span>
+            <h3>Software Engineer II</h3>
+            <p class="timeline-org">IntraEdge · Burgess Hill, England</p>
+            <p>
+              Continuing delivery across data engineering, ETL, SQL, cloud, and enterprise
+              application work for business-critical systems.
+            </p>
+          </article>
+          <article class="timeline-item reveal">
+            <span class="timeline-date">Apr 2024 - May 2026</span>
+            <h3>Technology Analyst</h3>
+            <p class="timeline-org">Infosys · Brighton, England</p>
+            <p>
+              Led analysis and implementation work across ETL development, support,
+              database workflows, stakeholder coordination, and quality-focused delivery.
+            </p>
+          </article>
+          <article class="timeline-item reveal">
+            <span class="timeline-date">Jun 2018 - Mar 2024</span>
+            <h3>Engineering and Operations Roles</h3>
+            <p class="timeline-org">Infosys · India</p>
+            <p>
+              Grew from Operational Executive Trainee to Senior System Engineer, building
+              a foundation in disciplined operations, support, development, and teamwork.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section skills-band reveal" id="skills" aria-labelledby="skills-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Capabilities</p>
+          <h2 id="skills-title">A practical toolkit for data delivery.</h2>
+        </div>
+        <div class="skills-layout">
+          <div class="skill-group reveal">
+            <h3>Data Engineering</h3>
+            <div class="skill-meter" style="--level: 92%">
+              <span>ETL delivery</span>
+              <strong>Advanced</strong>
+            </div>
+            <div class="skill-meter" style="--level: 88%">
+              <span>SQL validation</span>
+              <strong>Advanced</strong>
+            </div>
+            <ul>
+              <li>ETL requirement analysis</li>
+              <li>Informatica PowerCenter</li>
+              <li>SQL and database workflows</li>
+              <li>Testing and production support</li>
+            </ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3>Platforms</h3>
+            <div class="skill-meter" style="--level: 82%">
+              <span>Quantum Treasury Suite</span>
+              <strong>Strong</strong>
+            </div>
+            <div class="skill-meter" style="--level: 74%">
+              <span>Cloud foundations</span>
+              <strong>Growing</strong>
+            </div>
+            <ul>
+              <li>Google Cloud Platform</li>
+              <li>Microsoft Azure Fundamentals</li>
+              <li>Quantum Treasury Suite</li>
+              <li>Cloud computing concepts</li>
+            </ul>
+          </div>
+          <div class="skill-group reveal">
+            <h3>Creative Practice</h3>
+            <div class="skill-meter" style="--level: 86%">
+              <span>Visual communication</span>
+              <strong>Strong</strong>
+            </div>
+            <div class="skill-meter" style="--level: 80%">
+              <span>Photography eye</span>
+              <strong>Strong</strong>
+            </div>
+            <ul>
+              <li>Graphic design</li>
+              <li>Photography</li>
+              <li>Visual storytelling</li>
+              <li>Clear stakeholder communication</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section creative-lens reveal" aria-labelledby="creative-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Creative Lens</p>
+          <h2 id="creative-title">The design and photography side makes the engineering clearer.</h2>
+        </div>
+        <div class="lens-grid">
+          <article class="lens-panel reveal">
+            <span>Frame</span>
+            <h3>Better documentation</h3>
+            <p>Visual hierarchy, screenshots, and diagrams that help teams find the point quickly.</p>
+          </article>
+          <article class="lens-panel reveal">
+            <span>Focus</span>
+            <h3>Cleaner stakeholder stories</h3>
+            <p>Complex data work explained with structure, context, and a useful next action.</p>
+          </article>
+          <article class="lens-panel reveal">
+            <span>Light</span>
+            <h3>More memorable portfolio</h3>
+            <p>A technical profile with an actual point of view: precision plus visual taste.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section credentials reveal" aria-labelledby="credentials-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Education & Recognition</p>
+          <h2 id="credentials-title">Formal learning backed by delivery recognition.</h2>
+        </div>
+        <div class="credential-grid">
+          <article class="reveal">
+            <h3>MSc in IT</h3>
+            <p>ISBM University · Information Technology · 2021 - 2023</p>
+          </article>
+          <article class="reveal">
+            <h3>Computer Science Graduate</h3>
+            <p>Buxi Jagabandhu Bidyadhar Autonomous College, Bhubaneswar · 2018</p>
+          </article>
+          <article class="reveal">
+            <h3>Certifications</h3>
+            <p>Microsoft Certified: Azure Fundamentals · Introduction to SQL</p>
+          </article>
+          <article class="reveal">
+            <h3>Awards</h3>
+            <p>Insta Awards and Eureka RISE Award for consistent contribution and impact.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact reveal" id="contact" aria-labelledby="contact-title">
+        <div class="contact-pulse" aria-hidden="true"></div>
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2 id="contact-title">Let’s build something data-driven and genuinely useful.</h2>
+          <p>
+            I am open to conversations around ETL development, data platform work,
+            treasury systems, SQL, cloud delivery, and creative technical projects.
+          </p>
+        </div>
+        <div class="contact-actions">
+          <a class="button primary" href="mailto:mehersitu2013@gmail.com">mehersitu2013@gmail.com</a>
+          <a class="button ghost" href="assets/profile-swetam-meher.pdf" target="_blank" rel="noreferrer">
+            View Resume
+          </a>
+          <a class="button ghost" href="https://www.linkedin.com/in/swetam-meher" target="_blank" rel="noreferrer">
+            LinkedIn
+          </a>
+          <a class="button ghost" href="https://tinyurl.com/swetam-meher" target="_blank" rel="noreferrer">
+            Portfolio Link
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© <span id="year"></span> Swetam Meher. Built for clear data stories and dependable delivery.</p>
+      <a href="#top">Back to top</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
