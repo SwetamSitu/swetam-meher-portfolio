@@ -42,12 +42,66 @@ if (year) {
   year.textContent = new Date().getFullYear();
 }
 
+document.body.classList.add("is-loading");
+
+window.setTimeout(() => {
+  document.body.classList.remove("is-loading");
+}, prefersReducedMotion ? 0 : 1900);
+
+const splitText = (element) => {
+  if (!element || element.dataset.splitReady === "true") {
+    return;
+  }
+
+  const words = element.textContent.trim().split(/\s+/);
+  element.textContent = "";
+  element.classList.add("split-reveal");
+  element.dataset.splitReady = "true";
+
+  words.forEach((word, index) => {
+    const outer = document.createElement("span");
+    const inner = document.createElement("span");
+    outer.className = "word";
+    inner.className = "word-inner";
+    inner.textContent = word;
+    inner.style.setProperty("--word-index", index);
+    outer.appendChild(inner);
+    element.appendChild(outer);
+
+    if (index < words.length - 1) {
+      element.append(" ");
+    }
+  });
+};
+
+document.querySelectorAll("h1, h2").forEach(splitText);
+
+window.setTimeout(() => {
+  document.querySelector(".hero h1")?.classList.add("is-text-visible");
+}, prefersReducedMotion ? 0 : 520);
+
 const updateScrollState = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
   root.style.setProperty("--scroll-progress", progress.toFixed(4));
   root.style.setProperty("--hero-shift", `${Math.min(window.scrollY * 0.16, 72)}px`);
   siteHeader?.classList.toggle("is-scrolled", window.scrollY > 18);
+
+  document.querySelectorAll(".section").forEach((section) => {
+    const rect = section.getBoundingClientRect();
+    const centerX = Math.min(Math.max(((window.innerWidth / 2 - rect.left) / Math.max(rect.width, 1)) * 100, 0), 100);
+    const centerY = Math.min(Math.max(((window.innerHeight / 2 - rect.top) / Math.max(rect.height, 1)) * 100, 0), 100);
+    section.style.setProperty("--section-x", centerX.toFixed(2));
+    section.style.setProperty("--section-y", centerY.toFixed(2));
+  });
+
+  document.querySelectorAll(".pipeline-stage").forEach((stage) => {
+    const rect = stage.getBoundingClientRect();
+    const viewportCenter = window.innerHeight / 2;
+    const distance = Math.abs(rect.top + rect.height / 2 - viewportCenter);
+    const lift = Math.max(0, 16 - distance / 28);
+    stage.style.setProperty("--stage-lift", lift.toFixed(2));
+  });
 };
 
 updateScrollState();

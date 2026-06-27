@@ -50,6 +50,93 @@ body::before {
   pointer-events: none;
 }
 
+body.is-loading {
+  overflow: hidden;
+}
+
+.boot-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, rgba(48, 242, 210, 0.16), transparent 34%),
+    linear-gradient(135deg, #030807, #07100f 52%, #111a20);
+  color: var(--white);
+  pointer-events: none;
+  animation: loaderExit 900ms 1600ms ease forwards;
+}
+
+.boot-loader::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(48, 242, 210, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(48, 242, 210, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  content: "";
+  animation: gridDrift 5s linear infinite;
+}
+
+.boot-core {
+  position: relative;
+  width: min(520px, calc(100vw - 40px));
+  padding: 30px;
+  border: 1px solid rgba(48, 242, 210, 0.3);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: 0 0 70px rgba(48, 242, 210, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.boot-core::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(48, 242, 210, 0.18), transparent);
+  content: "";
+  transform: translateX(-120%);
+  animation: commandSweep 1.4s ease-in-out infinite;
+}
+
+.boot-kicker,
+.boot-core strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.boot-kicker {
+  color: var(--cyber);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.boot-core strong {
+  margin-top: 10px;
+  font-size: clamp(2rem, 7vw, 4.6rem);
+  line-height: 0.92;
+}
+
+.boot-bar {
+  position: relative;
+  z-index: 1;
+  height: 8px;
+  margin-top: 28px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.boot-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--cyber), var(--violet), var(--amber));
+  animation: bootFill 1.45s cubic-bezier(0.2, 0.78, 0.2, 1) forwards;
+}
+
 img {
   display: block;
   max-width: 100%;
@@ -210,6 +297,19 @@ a {
   isolation: isolate;
 }
 
+.hero-aperture {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background:
+    linear-gradient(90deg, #07100f 0 50%, transparent 50%),
+    linear-gradient(270deg, #07100f 0 50%, transparent 50%);
+  transform: scaleX(1);
+  transform-origin: center;
+  animation: apertureOpen 1300ms 340ms cubic-bezier(0.2, 0.78, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
 .hero-media {
   position: absolute;
   inset: 0;
@@ -354,7 +454,7 @@ a {
   z-index: 2;
   align-self: center;
   width: min(760px, 100%);
-  animation: heroRise 760ms ease-out both;
+  animation: heroRise 760ms 460ms ease-out both;
 }
 
 .eyebrow {
@@ -380,6 +480,36 @@ h1 {
   line-height: 0.96;
   letter-spacing: 0;
   text-shadow: 0 0 34px rgba(48, 242, 210, 0.12);
+}
+
+.split-reveal {
+  display: inline-block;
+}
+
+.split-reveal .word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+
+.split-reveal .word-inner {
+  display: inline-block;
+  transform: translateY(115%) rotateX(55deg);
+  transform-origin: left bottom;
+  opacity: 0;
+  filter: blur(10px);
+  transition:
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 700ms ease,
+    filter 900ms ease;
+  transition-delay: calc(var(--word-index, 0) * 46ms + var(--reveal-extra-delay, 0ms));
+}
+
+.is-visible .split-reveal .word-inner,
+.split-reveal.is-text-visible .word-inner {
+  transform: translateY(0) rotateX(0deg);
+  opacity: 1;
+  filter: blur(0);
 }
 
 h2 {
@@ -639,7 +769,53 @@ h3 {
 }
 
 .section {
+  position: relative;
   padding: 96px clamp(20px, 5vw, 72px);
+  overflow: hidden;
+}
+
+.section-vault {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background:
+    linear-gradient(90deg, transparent, rgba(48, 242, 210, 0.18), transparent),
+    linear-gradient(135deg, rgba(7, 16, 15, 0.96), rgba(7, 16, 15, 0.72));
+  transform: translateX(-112%);
+  pointer-events: none;
+}
+
+.reveal.is-visible > .section-vault {
+  animation: vaultSweep 920ms cubic-bezier(0.2, 0.78, 0.2, 1) both;
+}
+
+.section-heading,
+.intro-copy,
+.pipeline-lab,
+.case-grid,
+.work-grid,
+.timeline,
+.skills-layout,
+.lens-grid,
+.credential-grid {
+  position: relative;
+  z-index: 1;
+}
+
+.section::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at calc(var(--section-x, 50) * 1%) calc(var(--section-y, 50) * 1%), rgba(48, 242, 210, 0.1), transparent 26%);
+  content: "";
+  opacity: 0;
+  transition: opacity 600ms ease;
+  pointer-events: none;
+}
+
+.section.is-visible::after {
+  opacity: 1;
 }
 
 .section[id],
@@ -753,6 +929,7 @@ h3 {
   cursor: pointer;
   transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
   overflow: hidden;
+  transform: translateY(calc(var(--stage-lift, 0) * -1px));
 }
 
 .pipeline-stage::after {
@@ -1198,12 +1375,17 @@ h3 {
 
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 720ms ease, transform 720ms cubic-bezier(0.2, 0.78, 0.2, 1);
+  clip-path: inset(18% 0 0 0);
+  transform: translateY(38px) scale(0.985);
+  transition:
+    opacity 760ms ease,
+    transform 900ms cubic-bezier(0.2, 0.78, 0.2, 1),
+    clip-path 900ms cubic-bezier(0.2, 0.78, 0.2, 1);
 }
 
 .reveal.is-visible {
   opacity: 1;
+  clip-path: inset(0 0 0 0);
   transform: translateY(0);
 }
 
@@ -1242,6 +1424,50 @@ h3 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes loaderExit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.04);
+  }
+}
+
+@keyframes bootFill {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes apertureOpen {
+  0% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+
+  100% {
+    clip-path: inset(0 50% 0 50%);
+    opacity: 0;
+  }
+}
+
+@keyframes vaultSweep {
+  0% {
+    transform: translateX(-112%) skewX(-12deg);
+  }
+
+  45% {
+    transform: translateX(0) skewX(-12deg);
+  }
+
+  100% {
+    transform: translateX(112%) skewX(-12deg);
   }
 }
 
@@ -1655,12 +1881,21 @@ h3 {
   .hero-motion,
   .hero-hologram,
   .hero-orbit,
-  .constellation-canvas {
+  .constellation-canvas,
+  .boot-loader,
+  .section-vault {
     display: none;
   }
 
   .reveal {
     opacity: 1;
     transform: none;
+    clip-path: none;
+  }
+
+  .split-reveal .word-inner {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }
