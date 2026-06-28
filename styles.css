@@ -927,7 +927,8 @@ h3 {
     linear-gradient(90deg, transparent, rgba(48, 242, 210, 0.18), transparent),
     repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px 8px),
     linear-gradient(135deg, rgba(7, 16, 15, 0.96), rgba(7, 16, 15, 0.72));
-  transform: translateX(-112%);
+  opacity: 0;
+  transform: translateX(-140%) skewX(-12deg);
   filter: drop-shadow(0 0 28px rgba(48, 242, 210, 0.26));
   pointer-events: none;
 }
@@ -1769,15 +1770,22 @@ h3 {
 
 @keyframes vaultSweep {
   0% {
-    transform: translateX(-112%) skewX(-12deg);
+    opacity: 0;
+    transform: translateX(-140%) skewX(-12deg);
+  }
+
+  18% {
+    opacity: 0.92;
   }
 
   45% {
+    opacity: 0.88;
     transform: translateX(0) skewX(-12deg);
   }
 
   100% {
-    transform: translateX(112%) skewX(-12deg);
+    opacity: 0;
+    transform: translateX(140%) skewX(-12deg);
   }
 }
 
@@ -2137,6 +2145,10 @@ h3 {
 
   .section {
     padding: 72px 20px;
+  }
+
+  .section-vault {
+    display: none;
   }
 
   .section::before {
