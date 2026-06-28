@@ -4,6 +4,7 @@ const siteHeader = document.querySelector(".site-header");
 const root = document.documentElement;
 const year = document.querySelector("#year");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const supportsFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 const canvas = document.querySelector(".constellation-canvas");
 const pipelineCopy = {
   source: {
@@ -208,6 +209,45 @@ if (pipelineStages.length > 0 && !prefersReducedMotion) {
 }
 
 if (!prefersReducedMotion) {
+  const updateCursorMode = () => {
+    document.body.classList.toggle("has-futuristic-cursor", supportsFinePointer && window.innerWidth > 780);
+  };
+
+  updateCursorMode();
+  window.addEventListener("resize", updateCursorMode, { passive: true });
+
+  let lastClickBurstAt = 0;
+
+  const createClickBurst = (event) => {
+    if (event.button > 0) {
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastClickBurstAt < 120) {
+      return;
+    }
+
+    lastClickBurstAt = now;
+    root.style.setProperty("--cursor-x", `${event.clientX}px`);
+    root.style.setProperty("--cursor-y", `${event.clientY}px`);
+    document.body.classList.add("is-clicking");
+    window.setTimeout(() => document.body.classList.remove("is-clicking"), 140);
+
+    const burst = document.createElement("span");
+    burst.className = "click-burst";
+    burst.style.setProperty("--click-x", `${event.clientX}px`);
+    burst.style.setProperty("--click-y", `${event.clientY}px`);
+    document.body.appendChild(burst);
+
+    const removeBurst = () => burst.remove();
+    burst.addEventListener("animationend", removeBurst, { once: true });
+    window.setTimeout(removeBurst, 900);
+  };
+
+  window.addEventListener("pointerdown", createClickBurst, { passive: true });
+  window.addEventListener("click", createClickBurst, { passive: true });
+
   const revealItems = document.querySelectorAll(".reveal");
   const revealObserver = new IntersectionObserver(
     (entries) => {
