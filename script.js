@@ -80,14 +80,18 @@ window.setTimeout(() => {
   document.querySelector(".hero h1")?.classList.add("is-text-visible");
 }, prefersReducedMotion ? 0 : 520);
 
+const scrollSections = document.querySelectorAll(".section");
+const liftedPipelineStages = document.querySelectorAll(".pipeline-stage");
+
 const updateScrollState = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
   root.style.setProperty("--scroll-progress", progress.toFixed(4));
+  root.style.setProperty("--scroll-y", window.scrollY.toFixed(2));
   root.style.setProperty("--hero-shift", `${Math.min(window.scrollY * 0.16, 72)}px`);
   siteHeader?.classList.toggle("is-scrolled", window.scrollY > 18);
 
-  document.querySelectorAll(".section").forEach((section) => {
+  scrollSections.forEach((section) => {
     const rect = section.getBoundingClientRect();
     const centerX = Math.min(Math.max(((window.innerWidth / 2 - rect.left) / Math.max(rect.width, 1)) * 100, 0), 100);
     const centerY = Math.min(Math.max(((window.innerHeight / 2 - rect.top) / Math.max(rect.height, 1)) * 100, 0), 100);
@@ -95,7 +99,7 @@ const updateScrollState = () => {
     section.style.setProperty("--section-y", centerY.toFixed(2));
   });
 
-  document.querySelectorAll(".pipeline-stage").forEach((stage) => {
+  liftedPipelineStages.forEach((stage) => {
     const rect = stage.getBoundingClientRect();
     const viewportCenter = window.innerHeight / 2;
     const distance = Math.abs(rect.top + rect.height / 2 - viewportCenter);
@@ -105,11 +109,29 @@ const updateScrollState = () => {
 };
 
 updateScrollState();
-window.addEventListener("scroll", updateScrollState, { passive: true });
+
+let scrollUpdateQueued = false;
+
+const requestScrollUpdate = () => {
+  if (scrollUpdateQueued) {
+    return;
+  }
+
+  scrollUpdateQueued = true;
+
+  window.requestAnimationFrame(() => {
+    updateScrollState();
+    scrollUpdateQueued = false;
+  });
+};
+
+window.addEventListener("scroll", requestScrollUpdate, { passive: true });
+window.addEventListener("resize", requestScrollUpdate, { passive: true });
 
 if (navToggle && siteNav) {
   navToggle.addEventListener("click", () => {
     const isOpen = siteNav.classList.toggle("is-open");
+    navToggle.classList.toggle("is-open", isOpen);
     navToggle.setAttribute("aria-expanded", String(isOpen));
     navToggle.setAttribute("aria-label", isOpen ? "Close navigation" : "Open navigation");
   });
@@ -117,6 +139,7 @@ if (navToggle && siteNav) {
   siteNav.addEventListener("click", (event) => {
     if (event.target instanceof HTMLAnchorElement) {
       siteNav.classList.remove("is-open");
+      navToggle.classList.remove("is-open");
       navToggle.setAttribute("aria-expanded", "false");
       navToggle.setAttribute("aria-label", "Open navigation");
     }
@@ -127,6 +150,7 @@ const pipelineStages = document.querySelectorAll(".pipeline-stage");
 const pipelineTitle = document.querySelector("#pipeline-stage-title");
 const pipelineText = document.querySelector("#pipeline-stage-copy");
 const pipelineMetrics = document.querySelector(".pipeline-metrics");
+const pipelineConsole = document.querySelector(".pipeline-console");
 let activePipelineIndex = 0;
 let pipelineTouched = false;
 
@@ -155,6 +179,13 @@ const setPipelineStage = (stageName) => {
       return `<span><strong>${lead}</strong> ${rest.join(" ")}</span>`;
     })
     .join("");
+
+  if (!prefersReducedMotion && pipelineConsole) {
+    pipelineConsole.classList.remove("is-updating");
+    window.requestAnimationFrame(() => {
+      pipelineConsole.classList.add("is-updating");
+    });
+  }
 };
 
 pipelineStages.forEach((stage) => {
@@ -267,10 +298,12 @@ if (!prefersReducedMotion) {
   if (canvas) {
     const context = canvas.getContext("2d");
     const particles = [];
-    const particleCount = 74;
+    const getParticleCount = () => (window.innerWidth < 620 ? 46 : 84);
+    let particleCount = getParticleCount();
     let width = 0;
     let height = 0;
     let animationFrame = 0;
+    const pointer = { x: 0, y: 0, active: false };
 
     const resizeCanvas = () => {
       const ratio = Math.min(window.devicePixelRatio || 1, 2);
@@ -301,6 +334,18 @@ if (!prefersReducedMotion) {
       context.clearRect(0, 0, width, height);
 
       particles.forEach((particle) => {
+        if (pointer.active) {
+          const dx = particle.x - pointer.x;
+          const dy = particle.y - pointer.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance > 0 && distance < 170) {
+            const force = (170 - distance) / 170;
+            particle.x += (dx / distance) * force * 0.58;
+            particle.y += (dy / distance) * force * 0.58;
+          }
+        }
+
         particle.x += particle.vx;
         particle.y += particle.vy;
 
@@ -344,9 +389,20 @@ if (!prefersReducedMotion) {
     drawNetwork();
 
     window.addEventListener(
+      "pointermove",
+      (event) => {
+        pointer.x = event.clientX;
+        pointer.y = event.clientY;
+        pointer.active = true;
+      },
+      { passive: true }
+    );
+
+    window.addEventListener(
       "resize",
       () => {
         window.cancelAnimationFrame(animationFrame);
+        particleCount = getParticleCount();
         resizeCanvas();
         createParticles();
         drawNetwork();
