@@ -1789,6 +1789,26 @@ h3 {
   }
 }
 
+@keyframes mobileVaultSweep {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -68%, 0);
+  }
+
+  24% {
+    opacity: 0.82;
+  }
+
+  62% {
+    opacity: 0.46;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 68%, 0);
+  }
+}
+
 @keyframes commandRail {
   0%,
   100% {
@@ -2148,7 +2168,20 @@ h3 {
   }
 
   .section-vault {
-    display: none;
+    display: block;
+    inset: -8% 0;
+    background:
+      linear-gradient(180deg, transparent 0 38%, rgba(48, 242, 210, 0.2) 47%, rgba(124, 92, 255, 0.14) 52%, transparent 64%),
+      repeating-linear-gradient(90deg, transparent 0 26px, rgba(48, 242, 210, 0.07) 27px 28px);
+    opacity: 0;
+    transform: translate3d(0, -68%, 0);
+    filter: none;
+    mix-blend-mode: screen;
+    will-change: transform, opacity;
+  }
+
+  .reveal.is-visible > .section-vault {
+    animation: mobileVaultSweep 940ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   .section::before {
