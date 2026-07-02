@@ -75,6 +75,7 @@ const pipelineStages = document.querySelectorAll(".pipeline-stage");
 const pipelineTitle = document.querySelector("#pipeline-stage-title");
 const pipelineText = document.querySelector("#pipeline-stage-copy");
 const pipelineMetrics = document.querySelector(".pipeline-metrics");
+const pipelineConsole = document.querySelector(".pipeline-console");
 let activePipelineIndex = 0;
 let pipelineTouched = false;
 
@@ -92,6 +93,14 @@ const setPipelineStage = (stageName) => {
 
     if (isActive) {
       activePipelineIndex = index;
+
+      if (window.innerWidth <= 780) {
+        stage.scrollIntoView({
+          behavior: prefersReducedMotion ? "auto" : "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
     }
   });
 
@@ -103,6 +112,11 @@ const setPipelineStage = (stageName) => {
       return `<span><strong>${lead}</strong> ${rest.join(" ")}</span>`;
     })
     .join("");
+
+  if (!prefersReducedMotion && pipelineConsole) {
+    pipelineConsole.classList.remove("is-updating");
+    window.requestAnimationFrame(() => pipelineConsole.classList.add("is-updating"));
+  }
 };
 
 pipelineStages.forEach((stage) => {
@@ -225,6 +239,25 @@ if (!prefersReducedMotion) {
 
   window.addEventListener("pointerdown", createClickBurst, { passive: true });
   window.addEventListener("click", createClickBurst, { passive: true });
+
+  document.querySelectorAll(".tilt-card").forEach((card) => {
+    card.addEventListener("pointermove", (event) => {
+      if (!finePointer || window.innerWidth <= 780) {
+        return;
+      }
+
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.setProperty("--tilt-x", `${x * 4.5}deg`);
+      card.style.setProperty("--tilt-y", `${y * -4.5}deg`);
+    });
+
+    card.addEventListener("pointerleave", () => {
+      card.style.setProperty("--tilt-x", "0deg");
+      card.style.setProperty("--tilt-y", "0deg");
+    });
+  });
 }
 
 if (canvas && !prefersReducedMotion) {
